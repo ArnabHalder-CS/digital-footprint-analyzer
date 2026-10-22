@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#05070d">
+
+    <meta name="description" content="Digital Footprint Analyzer - Cybersecurity profile and IP analysis tool.">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-title" content="Digital Footprint Analyzer">
+
+    <title>Digital Footprint Analyzer</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="app-header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛡️
+            </div>
+
+            <div>
+                <h1>Digital Footprint Analyzer</h1>
+
+                <p>
+                    Cybersecurity Intelligence Dashboard
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="header-status">
+
+            <span class="status-dot"></span> SYSTEM ONLINE
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="app-container">
+
+
+        <!-- USERNAME SCANNER -->
+
+        <section class="hero-card">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    DIGITAL FOOTPRINT INTELLIGENCE
+                </span>
+
+                <h2>
+                    Investigate a digital identity.
+                </h2>
+
+                <p>
+                    Search public platforms for a username and analyze its visible digital footprint.
+                </p>
+
+            </div>
+
+
+            <div class="scan-box">
+
+                <label for="username">
+                    Username
+                </label>
+
+
+                <div class="input-row">
+
+                    <input type="text" id="username" name="username" placeholder="Enter username..." autocomplete="off" maxlength="50">
+
+
+                    <button type="button" id="scanButton" class="primary-button">
+
+                        <span id="scanButtonText">
+                            🔍 Scan
+                        </span>
+
+                        <span
+                            id="scanLoader"
+                            class="loader hidden"
+                        ></span>
+
+                    </button>
+
+                </div>
+
+
+                <div id="scanMessage" class="message"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCAN PROGRESS -->
+
+        <section id="scanProgress" class="progress-card hidden">
+
+            <div class="progress-header">
+
+                <strong>
+                    Scanning digital footprint...
+                </strong>
+
+                <span id="progressText">
+                    0 / 0
+                </span>
+
+            </div>
+
+
+            <div class="progress-track">
+
+                <div id="progressBar" class="progress-bar"></div>
+
+            </div>
+
+
+            <p id="currentPlatform">
+                Preparing scan...
+            </p>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section id="summarySection" class="summary-grid hidden">
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    Platforms Scanned
+                </span>
+
+                <strong id="totalCount" class="stat-value">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card found">
+
+                <span class="stat-label">
+                    Found
+                </span>
+
+                <strong id="foundCount" class="stat-value">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card blocked">
+
+                <span class="stat-label">
+                    Blocked
+                </span>
+
+                <strong id="blockedCount" class="stat-value">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card not-found">
+
+                <span class="stat-label">
+                    Not Found
+                </span>
+
+                <strong id="notFoundCount" class="stat-value">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- RISK -->
+
+        <section id="riskSection" class="risk-card hidden">
+
+            <div>
+
+                <span class="section-label">
+                    DIGITAL FOOTPRINT SCORE
+                </span>
+
+                <div class="risk-score">
+
+                    <strong id="riskScore">
+                        0
+                    </strong>
+
+                    <span>
+                        /100
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="risk-info">
+
+                <span>
+                    Exposure Level
+                </span>
+
+                <strong id="riskLevel">
+                    MINIMAL
+                </strong>
+
+                <small id="scanDate">
+                    —
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULTS -->
+
+        <section id="resultsSection" class="results-section hidden">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        PLATFORM RESULTS
+                    </span>
+
+                    <h2>
+                        Digital Presence
+                    </h2>
+
+                </div>
+
+
+                <span id="resultUsername" class="username-badge">
+                    —
+                </span>
+
+            </div>
+
+
+            <div id="resultsContainer" class="results-grid"></div>
+
+        </section>
+
+
+        <!-- SPECIAL SERVICES -->
+
+        <section class="services-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        SECURITY TOOLS
+                    </span>
+
+                    <h2>
+                        Special Services
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="services-grid">
+
+
+                <!-- IP ANALYZER -->
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🌐
+                    </div>
+
+                    <h3>
+                        IP Analyzer
+                    </h3>
+
+                    <p>
+                        Retrieve public information associated with an IP address.
+                    </p>
+
+
+                    <div class="service-input">
+
+                        <input type="text" id="ipInput" placeholder="Enter IP address..." autocomplete="off">
+
+
+                        <button type="button" id="ipLookupButton" class="secondary-button">
+                            Lookup
+                        </button>
+
+                    </div>
+
+
+                    <div id="ipMessage" class="message"></div>
+
+
+                    <div id="ipResult" class="ip-result hidden">
+
+                        <div class="ip-row">
+                            <span>IP Address</span>
+                            <strong id="ipAddress">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>ISP / Organization</span>
+                            <strong id="ipIsp">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>City</span>
+                            <strong id="ipCity">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>Region</span>
+                            <strong id="ipRegion">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>Country</span>
+                            <strong id="ipCountry">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>ASN</span>
+                            <strong id="ipAsn">—</strong>
+                        </div>
+
+                        <div class="ip-row">
+                            <span>Timezone</span>
+                            <strong id="ipTimezone">—</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PORT SCANNER -->
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🔌
+                    </div>
+
+                    <h3>
+                        Port Scanner
+                    </h3>
+
+                    <p>
+                        Check common network ports on an authorized target.
+                    </p>
+
+
+                    <div class="feature-placeholder">
+
+                        <span>
+                            Network security module
+                        </span>
+
+                        <span class="coming-badge">
+                            AVAILABLE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOG ANALYZER -->
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Log Analyzer
+                    </h3>
+
+                    <p>
+                        Analyze security logs and identify suspicious activity.
+                    </p>
+
+
+                    <div class="feature-placeholder">
+
+                        <span>
+                            Security log analysis
+                        </span>
+
+                        <span class="coming-badge">
+                            AVAILABLE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECURITY CHECK -->
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🛡️
+                    </div>
+
+                    <h3>
+                        Security Check
+                    </h3>
+
+                    <p>
+                        Review basic security exposure indicators from collected results.
+                    </p>
+
+
+                    <div class="feature-placeholder">
+
+                        <span>
+                            Security assessment
+                        </span>
+
+                        <span class="coming-badge">
+                            AVAILABLE
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INSTALL APP -->
+
+        <section id="installSection" class="install-card hidden">
+
+            <div class="install-icon">
+                📱
+            </div>
+
+
+            <div class="install-content">
+
+                <span class="section-label">
+                    APPLICATION
+                </span>
+
+                <h2>
+                    Install Digital Footprint Analyzer
+                </h2>
+
+                <p>
+                    Install this website as an application on your phone or computer.
+                </p>
+
+            </div>
+
+
+            <button type="button" id="installButton" class="primary-button">
+                Install App
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="app-footer">
+
+        <p>
+            Digital Footprint Analyzer
+            <span>•</span> Cybersecurity Project
+        </p>
+
+        <p>
+            For authorized and educational use only.
+        </p>
+
+    </footer>
+
+
+    <!-- MAIN JAVASCRIPT -->
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+    <!-- PWA -->
+
+    <script>
+        let deferredInstallPrompt = null;
+
+
+        const installSection =
+            document.getElementById("installSection");
+
+
+        const installButton =
+            document.getElementById("installButton");
+
+
+        /*
+         * SERVICE WORKER
+         */
+
+        if ("serviceWorker" in navigator) {
+
+            window.addEventListener(
+                "load",
+                function() {
+
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .then(function(registration) {
+
+                            console.log(
+                                "Service Worker registered:",
+                                registration.scope
+                            );
+
+                        })
+                        .catch(function(error) {
+
+                            console.error(
+                                "Service Worker registration failed:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+
+        /*
+         * INSTALL PROMPT
+         */
+
+        window.addEventListener(
+            "beforeinstallprompt",
+            function(event) {
+
+                event.preventDefault();
+
+                deferredInstallPrompt = event;
+
+
+                if (installSection) {
+
+                    installSection.classList.remove(
+                        "hidden"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * INSTALL BUTTON
+         */
+
+        if (installButton) {
+
+            installButton.addEventListener(
+                "click",
+                async function() {
+
+                    if (!deferredInstallPrompt) {
+
+                        alert(
+                            "Use your browser menu and select Install App or Add to Home Screen."
+                        );
+
+                        return;
+
+                    }
+
+
+                    deferredInstallPrompt.prompt();
+
+
+                    const result =
+                        await deferredInstallPrompt.userChoice;
+
+
+                    console.log(
+                        "Install result:",
+                        result.outcome
+                    );
+
+
+                    deferredInstallPrompt = null;
+
+
+                    if (installSection) {
+
+                        installSection.classList.add(
+                            "hidden"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /*
+         * APP INSTALLED
+         */
+
+        window.addEventListener(
+            "appinstalled",
+            function() {
+
+                console.log(
+                    "Digital Footprint Analyzer installed."
+                );
+
+
+                deferredInstallPrompt = null;
+
+
+                if (installSection) {
+
+                    installSection.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+        );
+    </script>
+
+</body>
+
+</html>

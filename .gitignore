@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+web/build/
+web/dist/
+reports/
+*.exe
+venv/
+.env
+data/__pycache__/
