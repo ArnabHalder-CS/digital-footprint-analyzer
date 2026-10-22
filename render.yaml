@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: digital-footprint-analyzer
+    runtime: python
+    region: singapore
+    plan: free
+    branch: main
+    buildCommand: pip install -r web/requirements.txt
+    startCommand: python web/app.py
+    envVars:
+      - key: PORT
+        value: 5000
